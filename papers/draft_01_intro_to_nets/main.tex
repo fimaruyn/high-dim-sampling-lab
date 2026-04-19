@@ -1,0 +1,202 @@
+\documentclass[12pt, a4paper]{article}
+
+% Языки и шрифты (XeLaTeX)
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\setmainfont{Times New Roman}[Ligatures=TeX]
+\setsansfont{Arial}
+\setmonofont{Courier New}
+
+% Улучшение типографики
+\usepackage{microtype}
+
+% Математика
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% Оформление теорем
+\theoremstyle{plain}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{proposition}[theorem]{Утверждение}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{corollary}[theorem]{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Определение}
+\newtheorem{example}[theorem]{Пример}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Замечание}
+
+% Удобные команды и операторы
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\wal}{wal} % Функции Уолша
+\DeclareMathOperator{\rad}{rad} % Радикальное обращение
+
+\newcommand{\eb}{\mathrm{e}}             
+\newcommand{\ii}{\mathrm{i}}            
+
+% Множества и числовые системы
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\NNz}{\mathbb{N}_0}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\FF}{\mathbb{F}}      
+\newcommand{\ZZb}{\mathbb{Z}_b}    
+\newcommand{\II}{[0, 1)}  
+\newcommand{\PP}{\mathcal{P}} 
+\newcommand{\ScrS}{\mathcal{S}}         
+\newcommand{\Is}{\mathcal{I}_s}
+\newcommand{\cPu}{\mathcal{P}_u}         
+\newcommand{\Gbm}{G_{b,m}}             
+
+% Векторы и матрицы
+\newcommand{\va}{\boldsymbol{a}}
+\newcommand{\vb}{\boldsymbol{b}}
+\newcommand{\vc}{\boldsymbol{c}}
+\newcommand{\vx}{\boldsymbol{x}}
+\newcommand{\vy}{\boldsymbol{y}}
+\newcommand{\vz}{\boldsymbol{z}}
+\newcommand{\vu}{\boldsymbol{u}}
+\newcommand{\vv}{\boldsymbol{v}}
+\newcommand{\vw}{\boldsymbol{w}}
+\newcommand{\vg}{\boldsymbol{g}}   % Столбцы генерирующей матрицы
+\newcommand{\vh}{\boldsymbol{h}}   % Вектор частот (для рядов Фурье/Уолша)
+\newcommand{\vzero}{\boldsymbol{0}}
+\newcommand{\vone}{\boldsymbol{1}}
+\newcommand{\ve}{\boldsymbol{e}}  
+
+% Прочие обозначения
+\newcommand{\ip}[2]{\langle #1,\, #2 \rangle}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+
+% Геометрия страницы
+\usepackage[left=25mm, right=25mm, top=25mm, bottom=25mm]{geometry}
+
+% Графика
+\usepackage{graphicx}
+
+% Гиперссылки
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, 
+    linkcolor=black,      
+    citecolor=blue,       
+    urlcolor=blue,
+    pdftitle={Введение в теорию цифровых сетей и последовательностей},
+    pdfauthor={В. А. Белов}
+}
+
+% Библиография
+\usepackage[backend=biber, style=numeric, sorting=nyt]{biblatex}
+\addbibresource{../../literature/bibliography.bib}
+
+\title{Введение в теорию цифровых сетей и последовательностей}
+\author{В. А. Белов \\ \small Российский технологический университет МИРЭА}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Настоящий документ служит введением в теорию цифровых сетей и последовательностей, подробно описанных в фундаментальной монографии Йозефа Дика и Фридриха Пиллихшаммера \cite{dick2010digital}.
+\end{abstract}
+
+\section{Обозначения}
+
+В работе используется единая система обозначений, представленная ниже:
+
+\subsection*{Множества и числовые системы}
+\begin{description}
+    \item[$\NN$] - Множество натуральных чисел.
+    \item[$\NNz$] - Множество натуральных чисел, включая ноль.
+    \item[$\ZZ$] - Кольцо целых чисел.
+    \item[$\RR$] - Поле действительных чисел.
+    \item[$\CC$] - Поле комплексных чисел.
+    \item[$\ZZb$] - Кольцо вычетов по модулю $b$ (отождествляется с $\{0, \dots, b-1\}$ с операциями сложения и умножения по модулю $b$).
+    \item[$\FF_b$] - Конечное поле из $b$ элементов ($b=p^k$, $p$ - простое). При $b=p$ отождествляется с $\ZZb$. Элементы иногда обозначаются в виде $\overline{0}, \overline{1}, \dots, \overline{b-1}$.
+    \item[$|X|$] - Мощность множества $X$.
+    \item[$X^m$] - $m$-кратное декартово произведение множества $X$.
+    \item[$(X^m)^\top$] - Множество $m$-мерных столбцовых векторов над $X$.
+    \item[$\PP$] - Конечное точечное множество в $\II^s$. Интерпретируется как «мультимножество» (набор элементов, где важна кратность появления каждой точки)..
+    \item[$\ScrS$] - Бесконечная последовательность точек в $\II^s$.
+    \item[$\Is$] - Индексное множество $\{1, \dots, s\}$.
+    \item[$u, v, \dots$] - Подмножества индексного множества $\Is$.
+    \item[$\cPu$] - Точечное множество в $[0,1]^{|u|}$, полученное проекцией точек из $\PP$ на координаты, соответствующие $u \subseteq \Is$.
+    \item[{$\FF_b((x^{-1})), \ZZb((x^{-1}))$}] - Поле формальных рядов Лорана над $\FF_b$ или $\ZZb$.
+    \item[$G_{b,m}$] = $\{q \in \FF_b[x] : \deg(q) < m\}$.
+    \item[$\gamma$] - Набор неотрицательных весов $\gamma = \{\gamma_u : u \subseteq \Is\}$. В случае весов произведения $\gamma = (\gamma_i)_{i \ge 1}$ и $\gamma_u = \prod_{i \in u} \gamma_i$.
+\end{description}
+
+\subsection*{Векторы и матрицы}
+Векторы рассматриваются как столбцы. Жирное начертание обозначает векторы.
+\begin{description}
+    \item[$\vx, \vy, \vz$] - Векторы в $\RR^s$ или $\FF_b^s$.
+    \item[$\vx_u$] - Проекция вектора $\vx$ на координаты с индексами из $u \subseteq \Is$.
+    \item[$( \vx_u, \vone )$] - Вектор, у которого компоненты с индексами из $u$ взяты от $\vx$, а остальные равны $1$.
+    \item[$( \vx_u, \vzero )$] - Аналогично, но остальные компоненты равны $0$.
+    \item[$( \vx_u, \vw )$] - Вектор, у которого $i$-я компонента равна $x_i$, если $i \in u$, и $w_i$ в противном случае.
+    \item[$A, B, C, \dots$] - Матрицы над $\FF_b$ размера $m \times m$ или $\NN \times \NN$.
+    \item[$C^\top$] - Транспонированная матрица.
+    \item[$C^{(m)}$] - Левый верхний $m \times m$-блок матрицы $C$.
+    \item[$C^{(m \times n)}$] - Левый верхний $m \times n$-блок матрицы $C$.
+\end{description}
+
+\subsection*{Алгебраические структуры и функции}
+\begin{description}
+    \item[$\mathrm{i}$] - Мнимая единица ($\mathrm{i}^2 = -1$).
+    \item[$\omega_b$] = $\eb^{2\pi \mathrm{i}/b}$.
+    \item[$\mathrm{wal}_{b,k}$] - $k$-я $b$-адическая функция Уолша.
+    \item[$\chi_J(\vx)$] - Характеристическая функция множества $J$: равна $1$, если $\vx \in J$, и $0$ в противном случае.
+    \item[$\phi_b$] - $b$-адическая функция радикального обращения.
+    \item[$\varphi$] - Биекция $\{0, \dots, b-1\} \to \FF_b$.
+    \item[$\varphi^{-1}$] - Обратная биекция.
+\end{description}
+
+\subsection*{Цифровые разложения и операции}
+\begin{description}
+    \item[$\overrightarrow{\mathrm{tr}}_m(k)$] - Вектор первых $m$ цифр $b$-адического разложения $k$.
+    \item[$\mathrm{tr}_m(k)$] - Целое число, соответствующее первым $m$ цифрам $b$-адического разложения $k$.
+    \item[$\pi_m(\vc)$] - Проекция вектора $\vc \in \FF_b^N$ на первые $m$ компонент.
+    \item[$d \mid n$] - $d$ делит $n$.
+    \item[$\{x\}$] - Дробная часть числа $x$.
+    \item[$\lfloor x \rfloor$] - Целая часть числа $x$.
+    \item[$\lceil x \rceil$] - Наименьшее целое, не меньшее $x$.
+    \item[$\overline{a}$] - Комплексно сопряжённое к $a$.
+    \item[$|\vx|_1$] - $L_1$-норма: $|\vx|_1 = |x_1| + \dots + |x_s|$.
+    \item[$|\vx|_\infty$] - Максимальная норма: $|\vx|_\infty = \max_{1\le i\le s} |x_i|$.
+\end{description}
+
+\subsection*{Параметры качества и метрики}
+\begin{description}
+    \item[$A(J, N, \ScrS)$] - Число точек последовательности $\ScrS$ среди первых $N$, попавших в $J$.
+    \item[$A(J, N, \PP)$] - Число точек множества $\PP$, попавших в $J$.
+    \item[$\lambda_s$] - $s$-мерная мера Лебега.
+    \item[$D_N^*$] - Звёздная неравномерность (star discrepancy).
+    \item[$D_{N,\gamma}^*$] - Взвешенная звёздная неравномерность.
+    \item[$D_N$] - Экстремальная неравномерность (extreme discrepancy).
+    \item[$L_{q,N}$] - $L_q$-неравномерность.
+    \item[$L_{q,N,\gamma}$] - Взвешенная $L_q$-неравномерность.
+    \item[$B_k$] - $k$-й многочлен Бернулли.
+    \item[$I(f)$] - Интеграл функции $f$ по $\II^s$.
+    \item[$Q_N(f)$] - Правило квази-Монте-Карло: $Q_N(f) = \frac{1}{N} \sum_{n=0}^{N-1} f(\vx_n)$.
+    \item[$\mathrm{Prob}$] - Вероятность.
+    \item[$\mathbb{E}$] - Математическое ожидание.
+    \item[$\mathrm{Var}$] - Дисперсия.
+    \item[$O(f(N))$] - Большое $O$-обозначение.
+\end{description}
+
+\printbibliography[heading=bibintoc, title={Список литературы}]
+
+\end{document}

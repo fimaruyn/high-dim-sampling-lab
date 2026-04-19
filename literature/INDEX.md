@@ -14,7 +14,7 @@ It categorizes 369 reference papers ranging from fundamental theory to advanced 
 ## 01_fundamentals
 *Foundational theory, textbooks, handbooks, and general introductions to Monte Carlo and Quasi-Monte Carlo methods.*
 
-- [ ] `Dick-Pillichshammer-Digital_Nets_and_Sequences__Discrepancy_Theory_and_Quasi_Monte_Carlo_Integration-2009.pdf`
+- [>] `Dick-Pillichshammer-Digital_Nets_and_Sequences__Discrepancy_Theory_and_Quasi_Monte_Carlo_Integration-2009.pdf`
 - [ ] `Kuipers-Niederreiter-Uniform_distribution_of_sequences-1974.pdf`
 - [ ] `Kroese-Taimre-Botev-Handbook of Monte Carlo Methods-2011.pdf`
 - [ ] `practicalqmc.pdf`
